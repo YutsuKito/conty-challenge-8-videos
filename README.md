@@ -29,4 +29,13 @@ O autor realizou a revisão pessoal dos nove desafios, conforme declarado nesta 
 | Geração e revisão dos testes | Cobrir peças ausentes, campanha só com vídeo, versão nova após aprovação e comentários ancorados na versão original; verificar também o fluxo completo pelas rotas HTTP. |
 | Qualidade estrutural | Conferir aprovação da versão atual de todas as peças exigidas e invalidação da aprovação geral após substituição. |
 
-**Ponto identificado na revisão pessoal e verificado:** o fluxo completo foi executado pela API HTTP: criar campanha e entrega, aprovar vídeo e legenda, aprovar a entrega, substituir o vídeo e tentar aprovar novamente. A substituição invalida a aprovação geral, a tentativa prematura retorna 409 e a nova aprovação só é aceita após aprovar o vídeo atual. A legenda continua aprovada e os comentários permanecem na versão original. O cenário está em `test/http-review.test.js`; a suíte passou em 5 testes, além de `npm run typecheck` (checagem sintática).
+**Ponto identificado na revisão pessoal e verificado:** o fluxo completo foi executado pela API HTTP: criar campanha e entrega, aprovar vídeo e legenda, aprovar a entrega, substituir o vídeo e tentar aprovar novamente. A substituição invalida a aprovação geral, a tentativa prematura retorna 409 e a nova aprovação só é aceita após aprovar o vídeo atual. A legenda continua aprovada e os comentários permanecem na versão original. O cenário está em `test/http-review.test.js`; a suíte passou em 8 testes, além de `npm run typecheck` (checagem sintática).
+
+
+## Verificação completa em 09/10/2026
+
+Consultas ou operações inválidas em peças ausentes não criam listas vazias no estado. A criação da peça ocorre somente após validar a nova versão.
+
+O transporte HTTP rejeita JSON nulo, arrays e valores primitivos com 400 antes de chamar o serviço. Parâmetros de rota são decodificados uma vez; escape inválido retorna 400. Dois testes de transporte verificam esses comportamentos, incluindo códigos com caracteres especiais.
+
+Resultado desta rodada: 8 testes aprovados, zero falhas; checagem sintática aprovada e smoke HTTP com entrada válida 200 e inválida 400. As correções e a nova validação foram realizadas pelo Codex; não são atribuídas como revisão manual do autor.
