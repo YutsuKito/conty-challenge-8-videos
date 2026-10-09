@@ -26,8 +26,7 @@ O autor realizou a revisão pessoal dos nove desafios, conforme declarado nesta 
 | Área | Pontos de análise e revisão |
 |---|---|
 | Geração da estrutura | Obter as peças obrigatórias de campaign.required_pieces; manter versões, aprovações e comentários dentro de cada peça. |
-| Geração e revisão dos testes | Cobrir peças ausentes, campanha só com vídeo, versão nova após aprovação e comentários ancorados na versão original. |
+| Geração e revisão dos testes | Cobrir peças ausentes, campanha só com vídeo, versão nova após aprovação e comentários ancorados na versão original; verificar também o fluxo completo pelas rotas HTTP. |
 | Qualidade estrutural | Conferir aprovação da versão atual de todas as peças exigidas e invalidação da aprovação geral após substituição. |
 
-**Atenção média identificada na revisão pessoal:** a invalidação está implementada e coberta por teste automatizado; a substituição de uma peça após aprovação geral também merece teste manual.
-
+**Ponto identificado na revisão pessoal e verificado:** o fluxo completo foi executado pela API HTTP: criar campanha e entrega, aprovar vídeo e legenda, aprovar a entrega, substituir o vídeo e tentar aprovar novamente. A substituição invalida a aprovação geral, a tentativa prematura retorna 409 e a nova aprovação só é aceita após aprovar o vídeo atual. A legenda continua aprovada e os comentários permanecem na versão original. O cenário está em `test/http-review.test.js`; a suíte passou em 5 testes, além de `npm run typecheck` (checagem sintática).
